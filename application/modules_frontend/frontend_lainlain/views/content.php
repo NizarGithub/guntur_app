@@ -7,7 +7,7 @@
         </div>
         <!-- /span4 -->
         <div class="span10">
-          <div class="widget widget-table action-table">
+            <div class="widget">
             <div class="widget-header"> <i class="icon-th-list"></i>
               <h3>Saham</h3>
             </div>
@@ -59,9 +59,9 @@
                       <?php endif; ?>
                     </tr>
                   <?php else: ?>
-                    <tr>
+                    <!--<tr>
                       <td colspan="6" style="background: red;color: white;">Module ini belum terisi!</td>
-                    </tr>
+                    </tr>-->
                   <?php endif; ?>
                 </tbody>
               </table>

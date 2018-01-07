@@ -50,9 +50,9 @@
                     </tr>
                     <?php endforeach; ?>
                   <?php else: ?>
-                    <tr>
+                    <!--<tr>
                       <td colspan="10" style="background: red;color: white;">Module ini belum terisi!</td>
-                    </tr>
+                    </tr>-->
                   <?php endif; ?>
                 </tbody>
               </table>

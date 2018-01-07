@@ -36,9 +36,9 @@
                         </tr>
                         <?php endforeach; ?>
                       <?php else: ?>
-                        <tr>
+                        <!--<tr>
                           <td colspan="3" style="background: red;color: white;">Module ini belum terisi!</td>
-                        </tr>
+                        </tr>-->
                       <?php endif; ?>
                     </tbody>
                   </table>
@@ -73,9 +73,9 @@
                         </tr>
                         <?php endforeach; ?>
                       <?php else: ?>
-                        <tr>
+                        <!--<tr>
                           <td colspan="3" style="background: red;color: white;">Module ini belum terisi!</td>
-                        </tr>
+                        </tr>-->
                       <?php endif; ?>
                     </tbody>
                   </table>
@@ -112,9 +112,9 @@
                         </tr>
                         <?php endforeach; ?>
                       <?php else: ?>
-                        <tr>
+                        <!--<tr>
                           <td colspan="3" style="background: red;color: white;">Module ini belum terisi!</td>
-                        </tr>
+                        </tr>-->
                       <?php endif; ?>
                     </tbody>
                   </table>
@@ -149,9 +149,9 @@
                         </tr>
                         <?php endforeach; ?>
                       <?php else: ?>
-                        <tr>
+                        <!--<tr>
                           <td colspan="3" style="background: red;color: white;">Module ini belum terisi!</td>
-                        </tr>
+                        </tr>-->
                       <?php endif; ?>
                     </tbody>
                   </table>
