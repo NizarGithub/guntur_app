@@ -95,9 +95,9 @@ class Crud_karyawan extends CI_Model {
 		return $this->db->join('karyawan', 'kary_id=kygj_kary_id', 'left')->get('karyawan_gaji')->row_array();
 	}
 	
-	function get_row_gaji_history($id, $periode){
+	function get_row_gaji_history($id, $periodeBulan, $periodeTahun){
 		return $this->db->query("
-		SELECT k.kary_nik, k.kary_nama, k.kary_jabatan_id, '$periode' AS kygj_periode, g.*
+		SELECT k.kary_nik, k.kary_nama, k.kary_jabatan_id, '$periodeBulan' AS kygj_periode_bulan, '$periodeTahun' AS kygj_periode_tahun, '$periodeTahun' AS kygj_periode, g.*
 		FROM gntrapp_karyawan k INNER JOIN 
 		(SELECT 
 		kygj_kary_id,
@@ -116,7 +116,7 @@ class Crud_karyawan extends CI_Model {
 		SUM(kygj_pph) AS kygj_pph,
 		SUM(kygj_bpjskes) AS kygj_bpjskes,
 		SUM(kygj_pinjaman) AS kygj_pinjaman FROM gntrapp_karyawan_gaji 
-		WHERE kygj_kary_id='$id' AND kygj_periode LIKE '%$periode%'
+		WHERE kygj_kary_id='$id' AND kygj_periode_bulan = $periodeBulan AND kygj_periode_tahun = $periodeTahun
 		GROUP BY kygj_kary_id) g ON k.kary_id=g.kygj_kary_id
 		")->row_array();
 	}

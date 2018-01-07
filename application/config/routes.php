@@ -223,7 +223,7 @@ $route['karyawan/gaji/edit/(:any)'] = "frontend_karyawan/karyawan/edit_gaji/$1";
 $route['karyawan/gaji/delete/(:any)'] = "frontend_karyawan/karyawan/delete_gaji/$1";
 $route['karyawan/gaji/pdf/(:any)'] = "frontend_karyawan/karyawan/pdf_print_gaji/$1";
 $route['karyawan/gaji-history'] = "frontend_karyawan/karyawan/history_gaji";
-$route['karyawan/gaji-history/pdf/(:any)/(:any)'] = "frontend_karyawan/karyawan/pdf_print_history_gaji/$1/$2";
+$route['karyawan/gaji-history/pdf/(:any)/(:any)/(:any)'] = "frontend_karyawan/karyawan/pdf_print_history_gaji/$1/$2/$3";
 
 //route pph-21 karyawan
 $route['karyawan/pph-21'] = "frontend_karyawan/karyawan/pph_21";

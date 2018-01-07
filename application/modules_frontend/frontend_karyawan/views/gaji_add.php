@@ -27,9 +27,27 @@
                         </select>
                       </div> <!-- /field -->
                       <div class="field">
-                        <label for="kygj_periode">Periode</label>
-                        <input id="kygj_periode" name="kygj_periode" placeholder="Periode" required />
+                        <label for="kygj_periode_bulan">Periode Bulan</label>
+                          <select name="kygj_periode_bulan" id="kygj_periode_bulan" required />
+                          <option value="">-- Pilih --</option>
+                          <?php foreach($option_bulan as $value): ?>
+                              <option value="<?php echo $value['value']; ?>"><?php echo $value['name']; ?></option>
+                          <?php endforeach; ?>
+                          </select>
                       </div> <!-- /field -->
+                        <div class="field">
+                            <label for="kygj_periode_tahun">Periode Tahun</label>
+                            <input id="kygj_periode_tahun" name="kygj_periode_tahun" placeholder="Periode Tahun (ex: <?php echo date('Y');?>)" required />
+                        </div> <!-- /field -->
+                        <div class="field">
+                            <label for="kygj_type_gaji">Tipe Gaji (THR / NON THR)</label>
+                            <select name="kygj_type_gaji" id="kygj_type_gaji" required />
+                            <option value="">-- Pilih --</option>
+                            <?php foreach($option_type_gaji as $value): ?>
+                                <option value="<?php echo $value['value']; ?>"><?php echo $value['name']; ?></option>
+                            <?php endforeach; ?>
+                            </select>
+                        </div> <!-- /field -->
                     </div>
                   </div>
                   <!-- /widget-content --> 

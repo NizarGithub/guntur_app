@@ -19,17 +19,26 @@
                     <div class="form-fields">
                       <div class="field">
                         <label for="kygj_kary_id">Karyawan</label>
-                        <select name="kygj_kary_id" id="kygj_kary_id" />
+                        <select name="kygj_kary_id" id="kygj_kary_id" required />
                           <option value="">-- Pilih --</option>
                           <?php foreach($option_karyawan as $value): ?>
                             <option value="<?php echo $value['value']; ?>"><?php echo $value['name']; ?></option>
                           <?php endforeach; ?>
                         </select>
                       </div> <!-- /field -->
-                      <div class="field">
-                        <label for="kygj_periode">Periode</label>
-                        <input id="kygj_periode" name="kygj_periode" placeholder="Periode" required />
-                      </div> <!-- /field -->
+                        <div class="field">
+                            <label for="kygj_periode_bulan">Periode Bulan</label>
+                            <select name="kygj_periode_bulan" id="kygj_periode_bulan" required />
+                            <option value="">-- Pilih --</option>
+                            <?php foreach($option_bulan as $value): ?>
+                                <option value="<?php echo $value['value']; ?>"><?php echo $value['name']; ?></option>
+                            <?php endforeach; ?>
+                            </select>
+                        </div> <!-- /field -->
+                        <div class="field">
+                            <label for="kygj_periode_tahun">Periode Tahun</label>
+                            <input id="kygj_periode_tahun" name="kygj_periode_tahun" placeholder="Periode Tahun (ex: <?php echo date('Y');?>)" required />
+                        </div> <!-- /field -->
                     </div>
 					
 					<div class="form-actions">

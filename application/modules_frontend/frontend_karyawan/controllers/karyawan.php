@@ -14,6 +14,68 @@ class Karyawan extends MY_Frontend {
 		$this->_data['module_base_url'] = site_url('karyawan');
 		$this->_data['module_base_url_gaji'] = site_url('karyawan/gaji');
 		$this->_data['datetime'] = date('Y-m-d H:i:s');
+
+        $this->option_bulan = [
+            [
+                'value' => 1,
+                'name' => 'Januari',
+            ],
+            [
+                'value' => 2,
+                'name' => 'Februari',
+            ],
+            [
+                'value' => 3,
+                'name' => 'Maret',
+            ],
+            [
+                'value' => 4,
+                'name' => 'April',
+            ],
+            [
+                'value' => 5,
+                'name' => 'Mei',
+            ],
+            [
+                'value' => 6,
+                'name' => 'Juni',
+            ],
+            [
+                'value' => 7,
+                'name' => 'Juli',
+            ],
+            [
+                'value' => 8,
+                'name' => 'Agustus',
+            ],
+            [
+                'value' => 9,
+                'name' => 'September',
+            ],
+            [
+                'value' => 10,
+                'name' => 'Oktober',
+            ],
+            [
+                'value' => 11,
+                'name' => 'November',
+            ],
+            [
+                'value' => 12,
+                'name' => 'Desember',
+            ],
+        ];
+
+        $this->option_type_gaji = [
+            [
+                'value' => 1,
+                'name' => 'NON THR',
+            ],
+            [
+                'value' => 2,
+                'name' => 'THR',
+            ],
+        ];
 	}
 
 	function index() {
@@ -177,6 +239,8 @@ class Karyawan extends MY_Frontend {
 		}
 
 		$this->_data['option_karyawan'] = $this->crud->get_option();
+		$this->_data['option_bulan'] = $this->option_bulan;
+		$this->_data['option_type_gaji'] = $this->option_type_gaji;
 
 		$this->template->set('title', 'Tambah Gaji Karyawan | Aplikasi Keuangan - PT. Putra Bahari Mandiri');
 		$this->template->set('assets', $this->_data['assets']);
@@ -189,8 +253,10 @@ class Karyawan extends MY_Frontend {
 		$this->form_validation->set_rules('kygj_kary_id', 'Karyawan', 'trim|htmlspecialchars|encode_php_tags|prep_for_form|required|xss_clean');
 		$this->form_validation->set_rules('kygj_gaji_pokok', 'Gaji Pokok', 'trim|htmlspecialchars|encode_php_tags|prep_for_form|xss_clean');
 		$this->form_validation->set_rules('kygj_tunjangan', 'Tunjangan', 'trim|htmlspecialchars|encode_php_tags|prep_for_form|xss_clean');
-		$this->form_validation->set_rules('kygj_periode', 'Periode', 'trim|htmlspecialchars|encode_php_tags|prep_for_form|xss_clean');
-		$this->form_validation->set_rules('kygj_lembur', 'Lembur', 'trim|htmlspecialchars|encode_php_tags|prep_for_form|xss_clean'); 
+		$this->form_validation->set_rules('kygj_periode_bulan', 'Periode Bulan', 'trim|htmlspecialchars|encode_php_tags|prep_for_form|xss_clean');
+		$this->form_validation->set_rules('kygj_periode_tahun', 'Periode Tahun', 'trim|htmlspecialchars|encode_php_tags|prep_for_form|xss_clean');
+		$this->form_validation->set_rules('kygj_type_gaji', 'Tipe Gaji', 'trim|htmlspecialchars|encode_php_tags|prep_for_form|xss_clean');
+		$this->form_validation->set_rules('kygj_lembur', 'Lembur', 'trim|htmlspecialchars|encode_php_tags|prep_for_form|xss_clean');
 		$this->form_validation->set_rules('kygj_rapelanbulanlalu', 'Rapelan Bulan Lalu', 'trim|htmlspecialchars|encode_php_tags|prep_for_form|xss_clean');
 		$this->form_validation->set_rules('kygj_transport', 'Transport', 'trim|htmlspecialchars|encode_php_tags|prep_for_form|xss_clean');
 		$this->form_validation->set_rules('kygj_insentif', 'Insentif', 'trim|htmlspecialchars|encode_php_tags|prep_for_form|xss_clean');
@@ -210,7 +276,9 @@ class Karyawan extends MY_Frontend {
 				'kygj_kary_id' => $this->input->post('kygj_kary_id'),
 				'kygj_gaji_pokok' => clear_numberformat($this->input->post('kygj_gaji_pokok')),
 				'kygj_tunjangan' => clear_numberformat($this->input->post('kygj_tunjangan')),
-				'kygj_periode' => $this->input->post('kygj_periode'),
+				'kygj_periode_bulan' => $this->input->post('kygj_periode_bulan'),
+				'kygj_periode_tahun' => $this->input->post('kygj_periode_tahun'),
+				'kygj_type_gaji' => $this->input->post('kygj_type_gaji'),
 				'kygj_lembur' => clear_numberformat($this->input->post('kygj_lembur')),
 				'kygj_rapelanbulanlalu' => clear_numberformat($this->input->post('kygj_rapelanbulanlalu')),
 				'kygj_transport' => clear_numberformat($this->input->post('kygj_transport')),
@@ -261,6 +329,8 @@ class Karyawan extends MY_Frontend {
 		}
 
 		$this->_data['option_karyawan'] = $this->crud->get_option();
+        $this->_data['option_bulan'] = $this->option_bulan;
+        $this->_data['option_type_gaji'] = $this->option_type_gaji;
 
 		$this->template->set('title', 'Edit Gaji Karyawan | Aplikasi Keuangan - PT. Putra Bahari Mandiri');
 		$this->template->set('assets', $this->_data['assets']);
@@ -274,7 +344,9 @@ class Karyawan extends MY_Frontend {
 		$this->form_validation->set_rules('kygj_kary_id', 'Karyawan', 'trim|htmlspecialchars|encode_php_tags|prep_for_form|required|xss_clean');
 		$this->form_validation->set_rules('kygj_gaji_pokok', 'Gaji Pokok', 'trim|htmlspecialchars|encode_php_tags|prep_for_form|xss_clean');
 		$this->form_validation->set_rules('kygj_tunjangan', 'Tunjangan', 'trim|htmlspecialchars|encode_php_tags|prep_for_form|xss_clean');
-		$this->form_validation->set_rules('kygj_periode', 'Periode', 'trim|htmlspecialchars|encode_php_tags|prep_for_form|xss_clean');
+		$this->form_validation->set_rules('kygj_periode_bulan', 'Periode Bulan', 'trim|htmlspecialchars|encode_php_tags|prep_for_form|xss_clean');
+		$this->form_validation->set_rules('kygj_periode_tahun', 'Periode Tahun', 'trim|htmlspecialchars|encode_php_tags|prep_for_form|xss_clean');
+		$this->form_validation->set_rules('kygj_type_gaji', 'Tipe Gaji THR / NON THR', 'trim|htmlspecialchars|encode_php_tags|prep_for_form|xss_clean');
 		$this->form_validation->set_rules('kygj_lembur', 'Lembur', 'trim|htmlspecialchars|encode_php_tags|prep_for_form|xss_clean');
 		$this->form_validation->set_rules('kygj_rapelanbulanlalu', 'Rapelan Bulan Lalu', 'trim|htmlspecialchars|encode_php_tags|prep_for_form|xss_clean');
 		$this->form_validation->set_rules('kygj_transport', 'Transport', 'trim|htmlspecialchars|encode_php_tags|prep_for_form|xss_clean');
@@ -295,7 +367,9 @@ class Karyawan extends MY_Frontend {
 				'kygj_kary_id' => $this->input->post('kygj_kary_id'),
 				'kygj_gaji_pokok' => clear_numberformat($this->input->post('kygj_gaji_pokok')),
 				'kygj_tunjangan' => clear_numberformat($this->input->post('kygj_tunjangan')),
-				'kygj_periode' => $this->input->post('kygj_periode'),
+				'kygj_periode_bulan' => $this->input->post('kygj_periode_bulan'),
+				'kygj_periode_tahun' => $this->input->post('kygj_periode_tahun'),
+				'kygj_type_gaji' => $this->input->post('kygj_type_gaji'),
 				'kygj_lembur' => clear_numberformat($this->input->post('kygj_lembur')),
 				'kygj_rapelanbulanlalu' => clear_numberformat($this->input->post('kygj_rapelanbulanlalu')),
 				'kygj_transport' => clear_numberformat($this->input->post('kygj_transport')),
@@ -347,7 +421,7 @@ class Karyawan extends MY_Frontend {
 	
 	function history_gaji(){
 		if(!empty($_POST)) {
-			redirect('karyawan/gaji-history/pdf/' . $this->input->post('kygj_kary_id')  . '/' . $this->input->post('kygj_periode'));
+			redirect('karyawan/gaji-history/pdf/' . $this->input->post('kygj_kary_id')  . '/' . $this->input->post('kygj_periode_bulan')  . '/' . $this->input->post('kygj_periode_tahun'));
 			//if($this->do_add_gaji()) {
 			//	redirect($this->_data['module_base_url_gaji']);
 			//	exit();
@@ -355,14 +429,15 @@ class Karyawan extends MY_Frontend {
 		}
 	
 		$this->_data['option_karyawan'] = $this->crud->get_option();
+		$this->_data['option_bulan'] = $this->option_bulan;
 
 		$this->template->set('title', 'Tambah Gaji Karyawan | Aplikasi Keuangan - PT. Putra Bahari Mandiri');
 		$this->template->set('assets', $this->_data['assets']);
 		$this->template->load('template_frontend/main', 'gaji_history', $this->_data);
 	}
 	
-	function pdf_print_history_gaji($id, $periode){
-		$this->_data['detail'] = $this->crud->get_row_gaji_history($id, $periode);
+	function pdf_print_history_gaji($id, $periodeBulan, $periodeTahun){
+		$this->_data['detail'] = $this->crud->get_row_gaji_history($id, $periodeBulan, $periodeTahun);
 		
     	
     	$this->load->view('print_karyawangaji_history',  $this->_data);
