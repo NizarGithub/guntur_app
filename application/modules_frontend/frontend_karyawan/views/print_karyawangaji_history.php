@@ -99,26 +99,34 @@ $bulan = (isset($option_bulan[($periodeBulan - 1)]) ? $option_bulan[($periodeBul
                         <td>Rp.</td>
                         <td><?php echo number_format($detail ['kygj_bpjstk'],0,',','.'); ?></td>
                     </tr>
+                    <?php if($detail ['kary_jabatan_id'] == 2): ?>
                     <tr>
                         <td>POTONGAN SHUTDOWN</td>
                         <td>Rp.</td>
                         <td><?php echo number_format($detail ['kygj_potshutdown'],0,',','.'); ?></td>
                     </tr>
+                    <?php endif; ?>
+                    <?php if($detail ['kary_jabatan_id'] == 2): ?>
                     <tr>
                         <td>RAPELAN BULAN DEPAN</td>
                         <td>Rp.</td>
                         <td><?php echo number_format($detail ['kygj_rapelbulandepan'],0,',','.'); ?></td>
                     </tr>
+                    <?php endif; ?>
+                    <?php if($detail ['kary_jabatan_id'] == 2): ?>
                     <tr>
                         <td>MANGKIR</td>
                         <td>Rp.</td>
                         <td><?php echo number_format($detail ['kygj_mangkir'],0,',','.'); ?></td>
                     </tr>
+                    <?php endif; ?>
+                    <?php if($detail ['kary_jabatan_id'] == 2): ?>
                     <tr>
                         <td>POTONGAN SERAGAM, SEPATU & HELM</td>
                         <td>Rp.</td>
                         <td><?php echo number_format($detail ['kygj_potperalatan'],0,',','.'); ?></td>
                     </tr>
+                    <?php endif; ?>
                     <tr>
                         <td>PPh</td>
                         <td>Rp.</td>
@@ -147,7 +155,13 @@ $bulan = (isset($option_bulan[($periodeBulan - 1)]) ? $option_bulan[($periodeBul
                             $f=$detail["kygj_pph"];
                             $g=$detail["kygj_bpjskes"];
                             $h=$detail["kygj_pinjaman"];
-                            $penjumlahan2 = $a+$b+$c+$d+$e+$f+$g+$h;
+
+                            if($detail ['kary_jabatan_id'] == 2) {
+                                $penjumlahan2 = $a+$b+$c+$d+$e+$f+$g+$h;
+                            } else {
+                                $penjumlahan2 = $a+$f+$g+$h;
+                            }
+
                             echo number_format($penjumlahan2,0,',','.');
                             ?>
                         </td>
@@ -211,7 +225,12 @@ $bulan = (isset($option_bulan[($periodeBulan - 1)]) ? $option_bulan[($periodeBul
                         $f=!empty($detail[$i]["kygj_pph"]) ? $detail[$i]["kygj_pph"] : 0;
                         $g=!empty($detail[$i]["kygj_bpjskes"]) ? $detail[$i]["kygj_bpjskes"] : 0;
                         $h=!empty($detail[$i]["kygj_pinjaman"]) ? $detail[$i]["kygj_pinjaman"] : 0;
-                        $penjumlahan2 = $a+$b+$c+$d+$e+$f+$g+$h;
+
+                        if($detail ['kary_jabatan_id'] == 2) {
+                            $penjumlahan2 = $a+$b+$c+$d+$e+$f+$g+$h;
+                        } else {
+                            $penjumlahan2 = $a+$f+$g+$h;
+                        }
                     ?>
                     <tr>
                         <td><?php echo $bulan; ?></td>
