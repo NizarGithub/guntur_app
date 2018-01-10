@@ -66,7 +66,7 @@ class Karyawan extends MY_Frontend {
             ],
         ];
 
-        $this->option_type_gaji = [
+        $this->_data['option_type_gaji'] = $this->option_type_gaji = [
             [
                 'value' => 1,
                 'name' => 'NON THR',
@@ -272,6 +272,20 @@ class Karyawan extends MY_Frontend {
 
 
 		if($this->form_validation->run()) {
+		    $res = $this->db->query('SELECT kary_jabatan_id FROM gntrapp_karyawan WHERE kary_id = ' . $this->input->post('kygj_kary_id'))->row_array();
+
+            if(!empty($res) AND $res['kary_jabatan_id'] == 2) {
+                $income = (clear_numberformat($this->input->post('kygj_gaji_pokok')) + clear_numberformat($this->input->post('kygj_tunjangan')) + clear_numberformat($this->input->post('kygj_lembur')) + clear_numberformat($this->input->post('kygj_uang_makan')) + clear_numberformat($this->input->post('kygj_bonus')) + clear_numberformat($this->input->post('kygj_lain_lain')) + clear_numberformat($this->input->post('kygj_transport')) + clear_numberformat($this->input->post('kygj_insentif')) + clear_numberformat($this->input->post('kygj_rapelanbulanlalu')));
+            } else {
+                $income = (clear_numberformat($this->input->post('kygj_gaji_pokok')) + clear_numberformat($this->input->post('kygj_tunjangan')) + clear_numberformat($this->input->post('kygj_lembur')) + clear_numberformat($this->input->post('kygj_uang_makan')) + clear_numberformat($this->input->post('kygj_bonus')) + clear_numberformat($this->input->post('kygj_lain_lain')) + clear_numberformat($this->input->post('kygj_transport')) + clear_numberformat($this->input->post('kygj_insentif')));
+            }
+
+            if(!empty($res) AND $res['kary_jabatan_id'] == 2) {
+                $deduction = (clear_numberformat($this->input->post('kygj_bpjstk')) + clear_numberformat($this->input->post('kygj_potshutdown')) + clear_numberformat($this->input->post('kygj_rapelbulandepan')) + clear_numberformat($this->input->post('kygj_mangkir')) + clear_numberformat($this->input->post('kygj_potperalatan'))+ clear_numberformat($this->input->post('kygj_pph'))+ clear_numberformat($this->input->post('kygj_bpjskes'))+ clear_numberformat($this->input->post('kygj_pinjaman')));
+            } else {
+                $deduction = (clear_numberformat($this->input->post('kygj_bpjstk')) + clear_numberformat($this->input->post('kygj_pph'))+ clear_numberformat($this->input->post('kygj_bpjskes'))+ clear_numberformat($this->input->post('kygj_pinjaman')));
+            }
+
 			$db_data = array(
 				'kygj_kary_id' => $this->input->post('kygj_kary_id'),
 				'kygj_gaji_pokok' => clear_numberformat($this->input->post('kygj_gaji_pokok')),
@@ -292,9 +306,9 @@ class Karyawan extends MY_Frontend {
 				'kygj_pph' => clear_numberformat($this->input->post('kygj_pph')),
 				'kygj_bpjskes' => clear_numberformat($this->input->post('kygj_bpjskes')),
 				'kygj_pinjaman' => clear_numberformat($this->input->post('kygj_pinjaman')),
-				'kygj_income' => (clear_numberformat($this->input->post('kygj_gaji_pokok')) + clear_numberformat($this->input->post('kygj_tunjangan')) + clear_numberformat($this->input->post('kygj_lembur')) + clear_numberformat($this->input->post('kygj_uang_makan')) + clear_numberformat($this->input->post('kygj_transport')) + clear_numberformat($this->input->post('kygj_bonus')) + clear_numberformat($this->input->post('kygj_pinjaman')) + clear_numberformat($this->input->post('kygj_lain_lain'))+ clear_numberformat($this->input->post('kygj_transport'))+ clear_numberformat($this->input->post('kygj_insentif'))),
-				'kygj_deduction' => (clear_numberformat($this->input->post('kygj_bpjstk')) + clear_numberformat($this->input->post('kygj_potshutdown')) + clear_numberformat($this->input->post('kygj_rapelbulandepan')) + clear_numberformat($this->input->post('kygj_mangkir')) + clear_numberformat($this->input->post('kygj_potperalatan'))+ clear_numberformat($this->input->post('kygj_pph'))+ clear_numberformat($this->input->post('kygj_bpjskes'))+ clear_numberformat($this->input->post('kygj_pinjaman'))),
-				'kygj_thp' => (clear_numberformat($this->input->post('kygj_income')) - clear_numberformat($this->input->post('kygj_deduction'))),
+				'kygj_income' => $income,
+				'kygj_deduction' => $deduction,
+				'kygj_thp' => ($income - $deduction),
 			);
 			// print_r($db_data); exit();
 			$this->crud->posts_gaji($db_data);
@@ -363,6 +377,20 @@ class Karyawan extends MY_Frontend {
 
 
 		if($this->form_validation->run()) {
+            $res = $this->db->query('SELECT kary_jabatan_id FROM gntrapp_karyawan WHERE kary_id = ' . $this->input->post('kygj_kary_id'))->row_array();
+
+            if(!empty($res) AND $res['kary_jabatan_id'] == 2) {
+                $income = (clear_numberformat($this->input->post('kygj_gaji_pokok')) + clear_numberformat($this->input->post('kygj_tunjangan')) + clear_numberformat($this->input->post('kygj_lembur')) + clear_numberformat($this->input->post('kygj_uang_makan')) + clear_numberformat($this->input->post('kygj_bonus')) + clear_numberformat($this->input->post('kygj_lain_lain')) + clear_numberformat($this->input->post('kygj_transport')) + clear_numberformat($this->input->post('kygj_insentif')) + clear_numberformat($this->input->post('kygj_rapelanbulanlalu')));
+            } else {
+                $income = (clear_numberformat($this->input->post('kygj_gaji_pokok')) + clear_numberformat($this->input->post('kygj_tunjangan')) + clear_numberformat($this->input->post('kygj_lembur')) + clear_numberformat($this->input->post('kygj_uang_makan')) + clear_numberformat($this->input->post('kygj_bonus')) + clear_numberformat($this->input->post('kygj_lain_lain')) + clear_numberformat($this->input->post('kygj_transport')) + clear_numberformat($this->input->post('kygj_insentif')));
+            }
+
+            if(!empty($res) AND $res['kary_jabatan_id'] == 2) {
+                $deduction = (clear_numberformat($this->input->post('kygj_bpjstk')) + clear_numberformat($this->input->post('kygj_potshutdown')) + clear_numberformat($this->input->post('kygj_rapelbulandepan')) + clear_numberformat($this->input->post('kygj_mangkir')) + clear_numberformat($this->input->post('kygj_potperalatan'))+ clear_numberformat($this->input->post('kygj_pph'))+ clear_numberformat($this->input->post('kygj_bpjskes'))+ clear_numberformat($this->input->post('kygj_pinjaman')));
+            } else {
+                $deduction = (clear_numberformat($this->input->post('kygj_bpjstk')) + clear_numberformat($this->input->post('kygj_pph'))+ clear_numberformat($this->input->post('kygj_bpjskes'))+ clear_numberformat($this->input->post('kygj_pinjaman')));
+            }
+
 			$db_data = array(
 				'kygj_kary_id' => $this->input->post('kygj_kary_id'),
 				'kygj_gaji_pokok' => clear_numberformat($this->input->post('kygj_gaji_pokok')),
@@ -383,9 +411,9 @@ class Karyawan extends MY_Frontend {
 				'kygj_pph' => clear_numberformat($this->input->post('kygj_pph')),
 				'kygj_bpjskes' => clear_numberformat($this->input->post('kygj_bpjskes')),
 				'kygj_pinjaman' => clear_numberformat($this->input->post('kygj_pinjaman')),
-				'kygj_income' => (clear_numberformat($this->input->post('kygj_gaji_pokok')) + clear_numberformat($this->input->post('kygj_tunjangan')) + clear_numberformat($this->input->post('kygj_lembur')) + clear_numberformat($this->input->post('kygj_uang_makan')) + clear_numberformat($this->input->post('kygj_transport')) + clear_numberformat($this->input->post('kygj_bonus')) + clear_numberformat($this->input->post('kygj_pinjaman')) + clear_numberformat($this->input->post('kygj_lain_lain'))+ clear_numberformat($this->input->post('kygj_transport'))+ clear_numberformat($this->input->post('kygj_insentif'))),
-				'kygj_deduction' => (clear_numberformat($this->input->post('kygj_bpjstk')) + clear_numberformat($this->input->post('kygj_potshutdown')) + clear_numberformat($this->input->post('kygj_rapelbulandepan')) + clear_numberformat($this->input->post('kygj_mangkir')) + clear_numberformat($this->input->post('kygj_potperalatan'))+ clear_numberformat($this->input->post('kygj_pph'))+ clear_numberformat($this->input->post('kygj_bpjskes'))+ clear_numberformat($this->input->post('kygj_pinjaman'))),
-				'kygj_thp' => (clear_numberformat($this->input->post('kygj_income')) - clear_numberformat($this->input->post('kygj_deduction'))),
+				'kygj_income' => $income,
+				'kygj_deduction' => $deduction,
+				'kygj_thp' => ($income - $deduction),
 			);
 			$this->crud->where('kygj_id = "'.$this->input->post('kygj_id').'"')->puts_gaji($db_data);
 

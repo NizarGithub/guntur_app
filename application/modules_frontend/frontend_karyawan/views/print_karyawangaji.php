@@ -1,8 +1,15 @@
+<?php
+$bulan = (isset($option_bulan[($detail['kygj_periode_bulan'] - 1)]) ? $option_bulan[($detail['kygj_periode_bulan'] - 1)]['name'] : '');
+?>
+
 <div class="span10">
   <div class="widget widget-table action-table">
     <div id="sticky-anchor"></div>
     <div align="center">
-        <h2>SLIP GAJI</h2>
+        <?php
+            $typeGaji = (!empty($option_type_gaji[$detail['kygj_type_gaji']-1]) ? $option_type_gaji[$detail['kygj_type_gaji']-1]['value'] : '');
+        ?>
+        <h2>SLIP GAJI <?php echo ($typeGaji == 2 ? 'THR' : ''); ?></h2>
     </div>
 
     <!-- /widget-header -->
@@ -15,13 +22,13 @@
                     <td style="width:40%; font-style: bold;">
                        <strong>PT PUTRA BAHARI MANDIRI</strong><br><br />
                        <strong>NAMA: <?php echo $detail ['kary_nama']; ?></strong><br>
-                       <strong>JABATAN: <?php echo $detail ['kary_jabatan_id']; ?></strong><br>
+                        <strong>JABATAN: <?php echo(!empty($static_data_source['kary_jabatan'][$detail ['kary_jabatan_id']]) ? $static_data_source['kary_jabatan'][$detail ['kary_jabatan_id']]['name'] : ''); ?></strong><br>
                        <strong>NIK: <?php echo $detail ['kary_nik']; ?></strong><br>
-                       <strong>PERIODE: <?php echo $detail ['kygj_periode']; ?></strong><br>
+                        <strong>PERIODE: <?php echo $bulan; ?> <?php echo(!empty($detail['kygj_periode_tahun']) ? $detail['kygj_periode_tahun'] : ''); ?></strong><br>
                     </td>
                 </tr>
         </table>
-    <div style="font-size: 20px!important; font-weight:bold; margin-top:10px;"><center>SLIP GAJI</center></div>
+    <div style="font-size: 20px!important; font-weight:bold; margin-top:10px;"><center>SLIP GAJI <?php echo ($typeGaji == 2 ? 'THR' : ''); ?></center></div>
     <table frame="box" style="margin-top: 5px; margin-left:20px; width:90%; " cellpadding="10">
             <tr style="font-size: 13px!important; font-weight:bold;">
                 <td style="width:50%;" style="border-left: 1px solid #cdd0d4;">INCOME</td>
@@ -48,11 +55,13 @@
                 <td>Rp.</td>
                 <td><?php echo number_format($detail ['kygj_lembur'],0,',','.'); ?></td>
             </tr>
+            <?php if($detail ['kary_jabatan_id'] == 2): ?>
             <tr>
                 <td>RAPELAN BULAN LALU</td>
                 <td>Rp.</td>
                 <td><?php echo number_format($detail ['kygj_rapelanbulanlalu'],0,',','.'); ?></td>
             </tr>
+            <?php endif; ?>
             <tr>
                 <td>Transport</td>
                 <td>Rp.</td>
@@ -75,7 +84,13 @@
                         $e=$detail["kygj_rapelanbulanlalu"];
                         $f=$detail["kygj_transport"];
                         $g=$detail["kygj_insentif"];
-                        $penjumlahan1 = $a+$b+$c+$d+$e+$f+$g;
+
+                        if($detail ['kary_jabatan_id'] == 2) {
+                            $penjumlahan1 = $a+$b+$c+$d+$e+$f+$g;
+                        } else {
+                            $penjumlahan1 = $a+$b+$c+$d+$f+$g;
+                        }
+
                         echo number_format($penjumlahan1,0,',','.');
                     ?>
                 </td>
@@ -93,26 +108,34 @@
                 <td>Rp.</td>
                 <td><?php echo number_format($detail ['kygj_bpjstk'],0,',','.'); ?></td>
             </tr>
+         <?php if($detail ['kary_jabatan_id'] == 2): ?>
             <tr>
                 <td>POTONGAN SHUTDOWN</td>
                 <td>Rp.</td>
                 <td><?php echo number_format($detail ['kygj_potshutdown'],0,',','.'); ?></td>
             </tr>
+         <?php endif; ?>
+         <?php if($detail ['kary_jabatan_id'] == 2): ?>
             <tr>
                 <td>RAPELAN BULAN DEPAN</td>
                 <td>Rp.</td>
                 <td><?php echo number_format($detail ['kygj_rapelbulandepan'],0,',','.'); ?></td>
             </tr>
+         <?php endif; ?>
+         <?php if($detail ['kary_jabatan_id'] == 2): ?>
             <tr>
                 <td>MANGKIR</td>
                 <td>Rp.</td>
                 <td><?php echo number_format($detail ['kygj_mangkir'],0,',','.'); ?></td>
             </tr>
+         <?php endif; ?>
+         <?php if($detail ['kary_jabatan_id'] == 2): ?>
             <tr>
                 <td>POTONGAN SERAGAM, SEPATU & HELM</td>
                 <td>Rp.</td>
                 <td><?php echo number_format($detail ['kygj_potperalatan'],0,',','.'); ?></td>
             </tr>
+         <?php endif; ?>
             <tr>
                 <td>PPh</td>
                 <td>Rp.</td>
@@ -141,7 +164,13 @@
                         $f=$detail["kygj_pph"];
                         $g=$detail["kygj_bpjskes"];
                         $h=$detail["kygj_pinjaman"];
+
+                    if($detail ['kary_jabatan_id'] == 2) {
                         $penjumlahan2 = $a+$b+$c+$d+$e+$f+$g+$h;
+                    } else {
+                        $penjumlahan2 = $a+$f+$g+$h;
+                    }
+
                         echo number_format($penjumlahan2,0,',','.');
                     ?>
                 </td>

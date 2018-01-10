@@ -54,11 +54,13 @@ $bulan = (isset($option_bulan[($periodeBulan - 1)]) ? $option_bulan[($periodeBul
                         <td>Rp.</td>
                         <td><?php echo number_format($detail ['kygj_lembur'],0,',','.'); ?></td>
                     </tr>
+                    <?php if($detail ['kary_jabatan_id'] == 2): ?>
                     <tr>
                         <td>RAPELAN BULAN LALU</td>
                         <td>Rp.</td>
                         <td><?php echo number_format($detail ['kygj_rapelanbulanlalu'],0,',','.'); ?></td>
                     </tr>
+                    <?php endif; ?>
                     <tr>
                         <td>Transport</td>
                         <td>Rp.</td>
@@ -81,7 +83,14 @@ $bulan = (isset($option_bulan[($periodeBulan - 1)]) ? $option_bulan[($periodeBul
                             $e=$detail["kygj_rapelanbulanlalu"];
                             $f=$detail["kygj_transport"];
                             $g=$detail["kygj_insentif"];
-                            $penjumlahan1 = $a+$b+$c+$d+$e+$f+$g;
+
+
+                            if($detail ['kary_jabatan_id'] == 2) {
+                                $penjumlahan1 = $a+$b+$c+$d+$e+$f+$g;
+                            } else {
+                                $penjumlahan1 = $a+$b+$c+$d+$f+$g;
+                            }
+
                             echo number_format($penjumlahan1,0,',','.');
                             ?>
                         </td>
@@ -215,7 +224,12 @@ $bulan = (isset($option_bulan[($periodeBulan - 1)]) ? $option_bulan[($periodeBul
                         $e=!empty($detail[$i]["kygj_rapelanbulanlalu"]) ? $detail[$i]["kygj_rapelanbulanlalu"] : 0;
                         $f=!empty($detail[$i]["kygj_transport"]) ? $detail[$i]["kygj_transport"] : 0;
                         $g=!empty($detail[$i]["kygj_insentif"]) ? $detail[$i]["kygj_insentif"] : 0;
-                        $penjumlahan1 = $a+$b+$c+$d+$e+$f+$g;
+
+                        if($detail ['kary_jabatan_id'] == 2) {
+                            $penjumlahan1 = $a+$b+$c+$d+$e+$f+$g;
+                        } else {
+                            $penjumlahan1 = $a+$b+$c+$d+$f+$g;
+                        }
 
                         $a=!empty($detail[$i]["kygj_bpjstk"]) ? $detail[$i]["kygj_bpjstk"] : 0;
                         $b=!empty($detail[$i]["kygj_potshutdown"]) ? $detail[$i]["kygj_potshutdown"] : 0;
