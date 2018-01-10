@@ -96,29 +96,90 @@ class Crud_karyawan extends CI_Model {
 	}
 	
 	function get_row_gaji_history($id, $periodeBulan, $periodeTahun){
-		return $this->db->query("
-		SELECT k.kary_nik, k.kary_nama, k.kary_jabatan_id, '$periodeBulan' AS kygj_periode_bulan, '$periodeTahun' AS kygj_periode_tahun, '$periodeTahun' AS kygj_periode, g.*
-		FROM gntrapp_karyawan k INNER JOIN 
-		(SELECT 
-		kygj_kary_id,
-		SUM(kygj_gaji_pokok) AS kygj_gaji_pokok,
-		SUM(kygj_uang_makan) AS kygj_uang_makan,
-		SUM(kygj_tunjangan) AS kygj_tunjangan,
-		SUM(kygj_lembur) AS kygj_lembur,
-		SUM(kygj_rapelanbulanlalu) AS kygj_rapelanbulanlalu,
-		SUM(kygj_transport) AS kygj_transport,
-		SUM(kygj_insentif) AS kygj_insentif,
-		SUM(kygj_bpjstk) AS kygj_bpjstk,
-		SUM(kygj_potshutdown) AS kygj_potshutdown,
-		SUM(kygj_rapelbulandepan) AS kygj_rapelbulandepan,
-		SUM(kygj_mangkir) AS kygj_mangkir,
-		SUM(kygj_potperalatan) AS kygj_potperalatan,
-		SUM(kygj_pph) AS kygj_pph,
-		SUM(kygj_bpjskes) AS kygj_bpjskes,
-		SUM(kygj_pinjaman) AS kygj_pinjaman FROM gntrapp_karyawan_gaji 
-		WHERE kygj_kary_id='$id' AND kygj_periode_bulan = $periodeBulan AND kygj_periode_tahun = $periodeTahun
-		GROUP BY kygj_kary_id) g ON k.kary_id=g.kygj_kary_id
-		")->row_array();
+	    if($periodeBulan == 'all') {
+	        $q = "
+		SELECT 
+		    kary_nama,
+		    kary_nik,
+		    kary_jabatan_id,
+		    tbl.*
+		FROM gntrapp_karyawan 
+		LEFT JOIN (SELECT 
+		    kygj_kary_id,
+		    kygj_periode_bulan,
+		    kygj_periode_tahun,
+            SUM(kygj_gaji_pokok) AS kygj_gaji_pokok,
+            SUM(kygj_tunjangan) AS kygj_tunjangan,
+            SUM(kygj_lembur) AS kygj_lembur,
+            SUM(kygj_uang_makan) AS kygj_uang_makan,
+            SUM(kygj_rapelanbulanlalu) AS kygj_rapelanbulanlalu,
+            SUM(kygj_income) AS kygj_income,
+            SUM(kygj_transport) AS kygj_transport,
+            SUM(kygj_insentif) AS kygj_insentif,
+            SUM(kygj_deduction) AS kygj_deduction,
+            SUM(kygj_thp) AS kygj_thp,
+            SUM(kygj_bpjstk) AS kygj_bpjstk,
+            SUM(kygj_potshutdown) AS kygj_potshutdown,
+            SUM(kygj_rapelbulandepan) AS kygj_rapelbulandepan,
+            SUM(kygj_mangkir) AS kygj_mangkir,
+            SUM(kygj_potperalatan) AS kygj_potperalatan,
+            SUM(kygj_pph) AS kygj_pph,
+            SUM(kygj_bpjskes) AS kygj_bpjskes,
+            SUM(kygj_pinjaman) AS kygj_pinjaman
+            FROM gntrapp_karyawan_gaji
+            WHERE kygj_kary_id='$id' AND kygj_periode_tahun = $periodeTahun 
+		    ORDER BY kygj_periode_bulan
+		) as tbl ON (kary_id = tbl.kygj_kary_id) 
+		WHERE kary_id='$id'
+		";
+	        $res = $this->db->query($q)->result_array();
+	        $arr = [];
+	        if(!empty($res)) {
+	            foreach ($res as $value) {
+                    $arr[0] = $value;
+	                if(empty($value['kygj_periode_bulan'])) continue;
+	                $arr[$value['kygj_periode_bulan']] = $value;
+                }
+            }
+            return $arr;
+        } else {
+            $q = "
+		SELECT 
+		    kary_nama,
+		    kary_nik,
+		    kary_jabatan_id,
+		    tbl.*
+		FROM gntrapp_karyawan 
+		LEFT JOIN (SELECT 
+		    kygj_kary_id,
+            kygj_periode_bulan,
+		    kygj_periode_tahun,
+            kygj_gaji_pokok,
+            kygj_tunjangan,
+            kygj_lembur,
+            kygj_uang_makan,
+            kygj_rapelanbulanlalu,
+            kygj_income,
+            kygj_transport,
+            kygj_insentif,
+            kygj_deduction,
+            kygj_thp,
+            kygj_bpjstk,
+            kygj_potshutdown,
+            kygj_rapelbulandepan,
+            kygj_mangkir,
+            kygj_potperalatan,
+            kygj_pph,
+            kygj_bpjskes,
+            kygj_pinjaman
+            FROM gntrapp_karyawan_gaji
+            WHERE kygj_kary_id='$id' AND kygj_periode_bulan = $periodeBulan AND kygj_periode_tahun = $periodeTahun
+		) as tbl ON (kary_id = tbl.kygj_kary_id)
+		WHERE kary_id='$id'
+		";
+            return $this->db->query($q)->row_array();
+        }
+
 	}
 
 	function get_all_gaji(){

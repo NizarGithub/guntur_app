@@ -15,7 +15,7 @@ class Karyawan extends MY_Frontend {
 		$this->_data['module_base_url_gaji'] = site_url('karyawan/gaji');
 		$this->_data['datetime'] = date('Y-m-d H:i:s');
 
-        $this->option_bulan = [
+        $this->_data['option_bulan'] = $this->option_bulan = [
             [
                 'value' => 1,
                 'name' => 'Januari',
@@ -438,9 +438,10 @@ class Karyawan extends MY_Frontend {
 	
 	function pdf_print_history_gaji($id, $periodeBulan, $periodeTahun){
 		$this->_data['detail'] = $this->crud->get_row_gaji_history($id, $periodeBulan, $periodeTahun);
-		
-    	
-    	$this->load->view('print_karyawangaji_history',  $this->_data);
+		$this->_data['periodeBulan'] = $periodeBulan;
+        $this->_data['periodeTahun'] = $periodeTahun;
+
+            $this->load->view('print_karyawangaji_history',  $this->_data);
 	}
 	
 	

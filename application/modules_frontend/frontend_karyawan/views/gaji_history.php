@@ -30,6 +30,7 @@
                             <label for="kygj_periode_bulan">Periode Bulan</label>
                             <select name="kygj_periode_bulan" id="kygj_periode_bulan" required />
                             <option value="">-- Pilih --</option>
+                            <option value="all">Semua Bulan</option>
                             <?php foreach($option_bulan as $value): ?>
                                 <option value="<?php echo $value['value']; ?>"><?php echo $value['name']; ?></option>
                             <?php endforeach; ?>
