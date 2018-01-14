@@ -232,16 +232,16 @@
         				<td><?php echo $value->brjs_nama; ?></td>
         				<td class="numeric"><?php echo $value->pbptnd_jumlah; ?></td>
                         <td><?php echo $value->brjs_volume; ?></td>
-        				<td class="numeric">Rp <?php echo number_format($value->brjs_harga_satuan,2,",","."); ?></td>
+        				<td class="numeric">Rp <?php echo number_format($value->pbptnd_hargabrg,2,",","."); ?></td>
         				<?php
-                            $jumlahharga = $value->pbptnd_jumlah * $value->brjs_harga_satuan;
+                            $jumlahharga = $value->pbptnd_jumlah * $value->pbptnd_hargabrg;
                         ?>
                         <td class="numeric">Rp <?php echo number_format($jumlahharga,2,",","."); ?></td>
         			</tr>
                     <?php $sum+= $jumlahharga; ?>
                     <?php endforeach; ?>
                         <?php
-                            $total = $value->pbptnd_jumlah * $value->brjs_harga_satuan;
+                            $total = $value->pbptnd_jumlah * $value->pbptnd_hargabrg;
                         ?>
         			<tr>
         				<td colspan="5" class="remove-bottom-border numeric">Total</td>
