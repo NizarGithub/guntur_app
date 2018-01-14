@@ -51,13 +51,13 @@
                     </tr>
                     <?php endforeach; ?>
 
-                    <tr>
+                    <!--<tr>
                       <td colspan="4">Total saham saat ini adalah : </td>
-                      <td style="text-align: right;font-weight:bold;font-size:20px;"><?php echo number_format_rupiah($total); ?></td>
-                      <?php if(($this->session->userdata('userid') == 1) OR ((!empty($role_access['lain-lain']['update'])) OR (!empty($role_access['lain-lain']['delete'])))): ?>
+                      <td style="text-align: right;font-weight:bold;font-size:20px;"><?php /*echo number_format_rupiah($total); */?></td>
+                      <?php /*if(($this->session->userdata('userid') == 1) OR ((!empty($role_access['lain-lain']['update'])) OR (!empty($role_access['lain-lain']['delete'])))): */?>
                       <td class="td-actions"></td>
-                      <?php endif; ?>
-                    </tr>
+                      <?php /*endif; */?>
+                    </tr>-->
                   <?php else: ?>
                     <!--<tr>
                       <td colspan="6" style="background: red;color: white;">Module ini belum terisi!</td>
@@ -65,6 +65,17 @@
                   <?php endif; ?>
                 </tbody>
               </table>
+                <div style="border-bottom: solid 1px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td colspan="4">Total saham saat ini adalah : </td>
+                            <td style="text-align: right;font-weight:bold;font-size:20px;"><?php echo number_format_rupiah($total); ?></td>
+                            <?php if(($this->session->userdata('userid') == 1) OR ((!empty($role_access['lain-lain']['update'])) OR (!empty($role_access['lain-lain']['delete'])))): ?>
+                                <td class="td-actions"></td>
+                            <?php endif; ?>
+                        </tr>
+                    </table>
+                </div>
             </div>
             <!-- /widget-content --> 
           </div>
