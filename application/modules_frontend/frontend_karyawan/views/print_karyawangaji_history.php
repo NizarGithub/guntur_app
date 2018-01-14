@@ -193,7 +193,7 @@ $bulan = (isset($option_bulan[($periodeBulan - 1)]) ? $option_bulan[($periodeBul
             <table border="1px;" style="margin-top: 20px; margin-left:20px; width:90%; " cellpadding="10">
                 <tr>
                     <td style="width:50%;">
-                        <img class="img-responsive" src="http://localhost:8080/gntr/assets/frontend/img/logo4.png">
+                        <img class="img-responsive" src="<?php echo site_url('assets/frontend/img/logo4.png'); ?>">
                     </td>
                     <td style="width:40%; font-style: bold;">
                         <strong>NAMA: <?php echo $detail[0]['kary_nama']; ?></strong><br>
